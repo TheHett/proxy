@@ -1,5 +1,6 @@
 package http;
 
+import com.Config;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
@@ -23,16 +24,19 @@ public class Server {
         httpServer.bind(new InetSocketAddress(8081), 0);
         httpServer.setExecutor(null);
 
+        int readBufferSize = Integer.parseInt(Config.getInstance().getProperty("read_buffer_size_bytes", "1024"));
 
         httpServer.createContext("/", httpExchange -> {
             try {
                 URL url = new URL(httpExchange.getRequestURI().toString().substring(1));
                 URLConnection urlConnection = url.openConnection();
-                byte[] a = new byte[16];
-                int len;
-                while ((len = urlConnection.getInputStream().read(a)) > 0) {
-                    String s = new String(a);
-                    System.out.println(s);
+
+                
+
+                byte[] chunk = new byte[readBufferSize];
+                int length;
+                while ((length = urlConnection.getInputStream().read(chunk)) > 0) {
+
                 }
             } catch (Exception e) {
                 logger.error(e);
