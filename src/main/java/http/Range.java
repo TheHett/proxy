@@ -19,19 +19,14 @@ public class Range {
     }
 
 
-    public static Range[] parseRange(String range, long length) {
+    /**
+     * @param header http header
+     * @param length max possibly content-length
+     * @return normalized array of Range
+     */
+    public static Range[] parseRangeHttpHeader(String header, long length) {
         // Range: bytes=200-1000, 2000-6576, 19000-
-        return parse(range.substring(range.indexOf("=") + 1), length);
-    }
-
-    static final Pattern contentRangePattern = Pattern.compile("Content-Range: bytes\\s([-\\d\\s,]+)(?:/\\d+)?");
-    public static Range[] parseContentRange(String range, long length) {
-        // Content-Range: bytes 200-1000/67589
-        Matcher matcher = contentRangePattern.matcher(range);
-        if (matcher.find()) {
-            return parse(matcher.group(1), length);
-        }
-        return  null;
+        return parse(header.substring(header.indexOf("=") + 1), length);
     }
 
     /**
