@@ -16,4 +16,9 @@ public class RangeTest {
                 Arrays.toString(Range.parseRangeHttpHeader("Range: bytes=0-50, 100-150, 160-", 1000)));
     }
 
+    @Test
+    public void testContentLength() {
+        Range range = new Range(0, 99);
+        Assert.assertEquals(100, range.getContentLength());
+    }
 }

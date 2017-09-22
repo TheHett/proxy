@@ -2,8 +2,7 @@ package http;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.HashMap;
 
 /**
  * Created by Hett on 02.09.2017.
@@ -147,8 +146,16 @@ public class Range {
         return end;
     }
 
+    /**
+     * @return length of content including start/end bytes
+     */
+    public long getContentLength() {
+        return end - start + 1;
+    }
+
     @Override
     public String toString() {
         return "[" + start + ", " + end + "]";
     }
+
 }
